@@ -11,7 +11,7 @@ def signup_view(request):
         if form.is_valid():  # フォームのバリデーションが成功した場合
             user = form.save()  # データベースに保存
             login(request, user)  # 保存したユーサーでログイン
-            return redirect("main")  # メイン画面にredirectする
+            return redirect("meeting")  # メイン画面にredirectする
     else:
         form = CustomSignupForm()  # フォームが送信されていない場合、空のフォームを表示
 
@@ -32,7 +32,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("main")
+                return redirect("meeting")
             else:
                 form.add_error(None, "無効なメールアドレスまたはパスワードです。")
         else:
