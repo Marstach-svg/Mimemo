@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Meetings
+from .forms import MeetingForm
 
 
 #meeting, transcript, (delete, update関係も追加で作成)
