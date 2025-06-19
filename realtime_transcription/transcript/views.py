@@ -19,5 +19,6 @@ def meeting_view(request):
     return render(request, "meeting.html", {"form": form})
 
 def transcript_view(request):
-    meeting_name = Meetings.get()#直前のページで入力した会議名を取ってきたい（redirectで引数として取ってくるかIDとかでmodelから検索かな
-    return render(request, "transcript.html", meeting_name=meeting_name)
+    # meeting_name = Meetings.get()#直前のページで入力した会議名を取ってきたい（redirectで引数として取ってくるかIDとかでmodelから検索かな
+    meeting_name = "週次ミーティング"
+    return render(request, "transcript.html", {"meeting_name": meeting_name})

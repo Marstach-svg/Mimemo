@@ -1,3 +1,50 @@
 {% extends 'base.html' %}
 {% block body %}
+    <body class="min-h-screen bg-gradient-to-tr from-purple-100 to-indigo-100 flex items-center justify-center">
+        <div class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-2xl h-[90vh] relative border border-indigo-100 flex flex-col">
+
+            <!-- 会議名 -->
+            <div class="absolute top-4 left-6 text-lg font-semibold text-indigo-600">
+            {{ meeting_name }}
+            </div>
+
+            <!-- 文字起こしエリア -->
+            <div class="flex-1 mt-14 mb-40 overflow-y-auto border border-gray-300 rounded-xl p-4 text-left text-gray-800">
+            <p>（ここにリアルタイムで文字が追加されていきます）</p>
+            </div>
+
+            <!-- 録音ボタン（上） -->
+            <div class="absolute bottom-28 left-1/2 transform -translate-x-1/2 flex space-x-6">
+            <button
+                class="bg-indigo-500 hover:bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg transition duration-200"
+                title="文字起こし開始"
+            >
+                🎙
+            </button>
+            <button
+                class="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full shadow-lg transition duration-200"
+                title="録音停止"
+            >
+                🔇
+            </button>
+            </div>
+
+            <!-- 出力ボタン（下・横並び・広め） -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-6">
+            <button
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
+                title="文字起こしをダウンロード"
+            >
+                テキストをDL
+            </button>
+
+            <button
+                class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
+                title="要約を生成"
+            >
+                要約して議事録作成
+            </button>
+            </div>
+        </div>
+        </body>
 {% endblock body %}
