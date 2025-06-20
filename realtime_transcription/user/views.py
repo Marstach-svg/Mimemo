@@ -4,20 +4,19 @@ from .forms import CustomSignupForm, LoginForm
 
 
 def signup_view(request):
-    if request.method == "POST":  # フォームがPOSTで送信されたとき
-        form = CustomSignupForm(
-            request.POST
-        )  # フォームにPOSTデータを渡してインスタンス作成
-        if form.is_valid():  # フォームのバリデーションが成功した場合
-            user = form.save()  # データベースに保存
-            login(request, user)  # 保存したユーサーでログイン
-            return redirect("meeting")  # メイン画面にredirectする
+    if request.method == "POST":
+        form = CustomSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("meeting")
+        # フォームが無効な場合はそのまま form を返す（エラー付き）
+        else:
+            print(form.errors)  # エラーの中身を確認用にログ出力
     else:
-        form = CustomSignupForm()  # フォームが送信されていない場合、空のフォームを表示
+        form = CustomSignupForm()
 
-    return render(
-        request, "signup.html", {"form": form}
-    )  # signup.htmlテンプレートをレンダリングし、フォームを渡す
+    return render(request, "signup.html", {"form": form})
 
 
 def login_view(request):
@@ -32,7 +31,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("meeting")
+                return redirect("meeting")  # ログイン成功後、メイン画面にリダイレクト
             else:
                 form.add_error(None, "無効なメールアドレスまたはパスワードです。")
         else:
