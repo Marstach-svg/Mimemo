@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
     <body class="min-h-screen bg-gradient-to-tr from-purple-100 to-indigo-100 flex items-center justify-center">
-        <div class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-2xl h-[90vh] relative border border-indigo-100 flex flex-col">
+        <div class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-4xl h-[90vh] relative border border-indigo-100 flex flex-col">
 
             <!-- 会議名 -->
             <div class="absolute top-4 left-6 text-lg font-semibold text-indigo-600">
@@ -14,23 +14,23 @@
             </div>
 
             <!-- 録音ボタン（上） -->
-            <div class="absolute bottom-28 left-1/2 transform -translate-x-1/2 flex space-x-6">
+            <div class="absolute bottom-28 left-1/2 transform -translate-x-1/2 flex space-x-16">
             <button
-                class="bg-indigo-500 hover:bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg transition duration-200"
+                class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center"
                 title="文字起こし開始"
             >
-                🎙
+                <i class="material-icons text-xl">mic</i>
             </button>
             <button
-                class="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full shadow-lg transition duration-200"
+                class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center"
                 title="録音停止"
             >
-                🔇
+                <i class="material-icons text-xl">mic_off</i>
             </button>
             </div>
 
             <!-- 出力ボタン（下・横並び・広め） -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-6">
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-8">
             <button
                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
                 title="文字起こしをダウンロード"
@@ -42,7 +42,7 @@
                 class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
                 title="要約を生成"
             >
-                要約して議事録作成
+                議事録作成
             </button>
             </div>
         </div>
