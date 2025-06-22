@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Meetings
 from .forms import MeetingForm
 
@@ -11,14 +11,14 @@ def meeting_view(request):
             meeting = form.save(commit=False)  # データベースに保存
             meeting.user = request.user  # 現在ログインしているユーザーをタスクに関連付け
             meeting.save()
-            return redirect("transcript")  # 一覧ページにリダイレクト
+            return redirect("transcript", meeting_id=meeting.id)  # 一覧ページにリダイレクト
         else:
             return render(request, "meeting.html", {"form": form})
     else:
         form = MeetingForm()  # フォームが送信されていない場合、空のフォームを表示
     return render(request, "meeting.html", {"form": form})
 
-def transcript_view(request):
+def transcript_view(request, meeting_id):
     # meeting_name = Meetings.get()#直前のページで入力した会議名を取ってきたい（redirectで引数として取ってくるかIDとかでmodelから検索かな
-    meeting_name = "週次ミーティング"
-    return render(request, "transcript.html", {"meeting_name": meeting_name})
+    meeting = get_object_or_404(Meetings, id=meeting_id)
+    return render(request, "transcript.html", {"meeting": meeting})
