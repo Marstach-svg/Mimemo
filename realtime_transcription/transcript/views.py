@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Meetings
 from .forms import MeetingForm
 
 
 #meeting, transcript, (delete, update関係も追加で作成)
+@login_required
 def meeting_view(request):
     if request.method == "POST":
         form = MeetingForm(request.POST)
@@ -18,6 +20,7 @@ def meeting_view(request):
         form = MeetingForm()  # フォームが送信されていない場合、空のフォームを表示
     return render(request, "meeting.html", {"form": form})
 
+@login_required
 def transcript_view(request, meeting_id):
     meeting = get_object_or_404(Meetings, id=meeting_id)
     return render(request, "transcript.html", {"meeting": meeting})
