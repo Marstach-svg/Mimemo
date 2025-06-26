@@ -48,7 +48,7 @@
 
         <!-- 文字起こしエリア -->
         <div class="flex-1 mt-14 mb-40 overflow-y-auto border border-gray-300 rounded-xl p-4 text-left text-gray-800">
-        <p>（ここにリアルタイムで文字が追加されていきます）</p>
+        <p id="transcriptionBox">（ここにリアルタイムで文字が追加されていきます）</p>
         </div>
 
         <!-- 録音ボタン -->
@@ -70,6 +70,7 @@
         <!-- 出力ボタン -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-8">
         <button
+            id="downloadBtn"
             class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
             title="文字起こしをダウンロード"
         >
