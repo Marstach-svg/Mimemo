@@ -22,9 +22,7 @@ class Meetings(models.Model):
 
 class Minutes(models.Model):
     id = models.AutoField(primary_key=True)
-    meeting = models.ForeignKey(
-        Meetings, on_delete=models.CASCADE
-    )  # Userが削除されたら削除（CASCADE）
+    meeting = models.OneToOneField(Meetings, on_delete=models.CASCADE) # Meetingが削除されたら削除（CASCADE）
     data = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from transcript.models import Meetings
 from .forms import CustomSignupForm, LoginForm
 
 
@@ -43,3 +45,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("login")  # ログインページにリダイレクト
+
+
+@login_required
+def mypage_view(request):
+    meetings = Meetings.objects.filter(user=request.user).order_by('created_at')
+    return render(request, 'mypage.html', {'meetings': meetings})

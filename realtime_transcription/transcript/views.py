@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Meetings
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from .models import Meetings, Minutes
 from .forms import MeetingForm
+import json
 
 
 #meeting, transcript, (delete, update関係も追加で作成)
@@ -23,4 +26,31 @@ def meeting_view(request):
 @login_required
 def transcript_view(request, meeting_id):
     meeting = get_object_or_404(Meetings, id=meeting_id)
-    return render(request, "transcript.html", {"meeting": meeting})
+    minutes = Minutes.objects.filter(meeting=meeting).first()  # ← 存在すれば取得、なければ None
+
+    return render(request, "transcript.html", {
+        "meeting": meeting,
+        "minutes": minutes,
+    })
+
+@require_POST
+@login_required
+def save_minutes_view(request):
+    try:
+        data = json.loads(request.body)
+        meeting_id = data.get("meeting_id")
+        text = data.get("data", "")
+    except (json.JSONDecodeError, TypeError):
+        return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
+
+    meeting = get_object_or_404(Meetings, id=meeting_id)
+
+    minutes, created = Minutes.objects.update_or_create(
+        meeting=meeting,
+        defaults={"data": text},
+    )
+
+    return JsonResponse({
+        "status": "success",
+        "created": created,
+    })

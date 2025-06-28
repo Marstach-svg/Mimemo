@@ -2,34 +2,34 @@
 {% block body %}
 <body class="min-h-screen bg-gradient-to-tr from-purple-100 to-indigo-200 relative flex items-center justify-center">
 
-    <!-- 🟪 サイドバー -->
+    <!-- サイドバー -->
     <aside
     id="sidebar"
     class="fixed left-12 top-1/2 transform -translate-y-1/2 w-48 h-4/5 bg-white shadow-2xl rounded-2xl p-6 transition-all duration-300 ease-in-out z-40"
     style="display: none;"
     >
-    <button
-        onclick="toggleSidebar()"
-        class="absolute top-4 right-4 text-indigo-500 hover:text-indigo-700 text-2xl font-bold px-2 py-1"
-    >
-        ×
-    </button>
-
-    <nav class="mt-12 space-y-4">
-        <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">ホーム</a>
-        <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">マイページ</a>
-        <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">設定</a>
-    </nav>
-
-    <form method="POST" action="{% url 'logout' %}" class="mt-6">
-        {% csrf_token %}
-        <button type="submit" class="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold">
-        ログアウト
+        <button
+            onclick="toggleSidebar()"
+            class="absolute top-4 right-4 text-indigo-500 hover:text-indigo-700 text-2xl font-bold px-2 py-1"
+        >
+            ×
         </button>
-    </form>
+
+        <nav class="mt-12 space-y-4">
+            <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">ホーム</a>
+            <a href="{% url 'mypage' %}" class="block text-indigo-700 hover:text-indigo-900 font-medium">マイページ</a>
+            <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">設定</a>
+        </nav>
+
+        <form method="POST" action="{% url 'logout' %}" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold">
+            ログアウト
+            </button>
+        </form>
     </aside>
 
-    <!-- 🟩 トグルボタン -->
+    <!-- トグルボタン -->
     <div
     id="openSidebarBtn"
     class="cursor-move fixed left-12 top-12 bg-white shadow-lg px-5 py-3 rounded-xl text-indigo-700 text-3xl font-bold hover:bg-indigo-50 z-50"
@@ -38,51 +38,57 @@
     ☰
     </div>
 
-    <!-- 📝 メイン画面 -->
-    <div class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-3xl h-[90vh] relative border border-indigo-100 flex flex-col">
+    <!-- メイン画面 -->
+    <div id="transcriptionRoot" data-meeting-id="{{ meeting.id }}" class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-3xl h-[90vh] relative border border-indigo-100 flex flex-col">
 
         <!-- 会議名 -->
         <div class="absolute top-4 left-6 text-lg font-semibold text-indigo-600">
         {{ meeting.meeting_name }}
         </div>
 
+        <!-- 保存ボタン（右上） -->
+        <button
+        id="saveBtn"
+        class="absolute top-4 right-6 text-sm text-indigo-600 border border-indigo-300 px-3 py-1 rounded hover:bg-indigo-50"
+        >
+        保存
+        </button>
+
         <!-- 文字起こしエリア -->
         <div class="flex-1 mt-14 mb-40 overflow-y-auto border border-gray-300 rounded-xl p-4 text-left text-gray-800">
-        <p id="transcriptionBox"></p>
+        <p id="transcriptionBox">{{ minutes.data|default:'' }}</p>
         </div>
 
         <!-- 録音ボタン -->
         <div class="absolute bottom-28 left-1/2 transform -translate-x-1/2 flex space-x-16">
-        <button
-            class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center"
-            title="文字起こし開始"
-        >
+        <button class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center" title="文字起こし開始">
             <i class="material-icons text-xl">mic</i>
         </button>
-        <button
-            class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center"
-            title="録音停止"
-        >
+        <button class="hover:bg-indigo-100 text-indigo-500 border border-gray-400 w-16 h-16 rounded-full shadow-lg transition duration-200 flex items-center justify-center" title="録音停止">
             <i class="material-icons text-xl">mic_off</i>
         </button>
         </div>
 
         <!-- 出力ボタン -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-8">
-        <button
-            id="downloadBtn"
-            class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
-            title="文字起こしをダウンロード"
-        >
+        <button id="downloadBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200" title="文字起こしをダウンロード">
             テキストをDL
         </button>
-
-        <button
-            class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200"
-            title="要約を生成"
-        >
+        <button class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 py-3 px-6 w-40 rounded-xl shadow text-sm font-semibold transition duration-200" title="要約を生成">
             議事録作成
         </button>
+        </div>
+    </div>
+
+    <!-- モーダル（保存確認） -->
+    <div id="saveModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
+        <h2 class="text-xl font-semibold mb-4">この内容で保存しますか？</h2>
+        <textarea id="modalText" class="w-full h-48 p-3 border border-gray-300 rounded" placeholder="内容を編集できます"></textarea>
+        <div class="mt-4 flex justify-end space-x-4">
+            <button id="cancelModal" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">キャンセル</button>
+            <button id="confirmSave" class="px-4 py-2 rounded bg-indigo-500 text-white hover:bg-indigo-600">保存する</button>
+        </div>
         </div>
     </div>
 </body>

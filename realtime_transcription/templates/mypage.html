@@ -1,3 +1,54 @@
 {% extends 'base.html' %}
 {% block body %}
+<body class="min-h-screen bg-gradient-to-tr from-purple-100 to-indigo-200 flex items-center justify-center px-4">
+    <!-- サイドバー -->
+    <aside
+    id="sidebar"
+    class="fixed left-12 top-1/2 transform -translate-y-1/2 w-48 h-4/5 bg-white shadow-2xl rounded-2xl p-6 transition-all duration-300 ease-in-out z-40"
+    style="display: none;"
+    >
+        <button
+            onclick="toggleSidebar()"
+            class="absolute top-4 right-4 text-indigo-500 hover:text-indigo-700 text-2xl font-bold px-2 py-1"
+        >
+            ×
+        </button>
+
+        <nav class="mt-12 space-y-4">
+            <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">ホーム</a>
+            <a href="{% url 'mypage' %}" class="block text-indigo-700 hover:text-indigo-900 font-medium">マイページ</a>
+            <a href="#" class="block text-indigo-700 hover:text-indigo-900 font-medium">設定</a>
+        </nav>
+
+        <form method="POST" action="{% url 'logout' %}" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold">
+            ログアウト
+            </button>
+        </form>
+    </aside>
+
+    <div class="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-2xl text-center border border-indigo-100">
+
+        <!-- タイトル -->
+        <h1 class="text-3xl font-bold text-indigo-700 mb-8">マイページ</h1>
+
+        <!-- 会議一覧 -->
+        <div class="space-y-6">
+        {% for meeting in meetings %}
+        <div class="border border-gray-200 rounded-xl p-5 bg-gray-50 shadow hover:shadow-md transition duration-300 flex items-center justify-between">
+            <div class="text-left">
+            <h2 class="text-xl font-semibold text-gray-800">{{ meeting.meeting_name }}</h2>
+            <p class="text-sm text-gray-500">作成者: {{ meeting.user.name }}</p>
+            </div>
+            <a href="{% url 'transcript' meeting.id %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl font-medium transition duration-200">
+            詳細
+            </a>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">まだ会議が登録されていません。</p>
+        {% endfor %}
+        </div>
+    </div>
+</body>
 {% endblock body %}
