@@ -1,6 +1,9 @@
 window.addEventListener("DOMContentLoaded", () => {
   const transcriptionBox = document.getElementById("transcriptionBox");
   if (!transcriptionBox) return; 
+  const root = document.getElementById("transcriptionRoot");
+  if (!root) return; 
+  const meetingId = root.dataset.meetingId;
 
   const micBtn = document.querySelector("button[title='文字起こし開始']");
   const stopBtn = document.querySelector("button[title='録音停止']");
@@ -12,8 +15,27 @@ window.addEventListener("DOMContentLoaded", () => {
   recognition.continuous = true;
   recognition.interimResults = true;
 
+  function getCsrfToken() {
+    return document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
+  }
+
   micBtn.addEventListener("click", () => recognition.start());
-  stopBtn.addEventListener("click", () => recognition.stop());
+  stopBtn.addEventListener("click", () => {
+    recognition.stop();
+
+    const text = transcriptionBox.innerText;
+    fetch("/realtime/save-minutes/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCsrfToken(),
+      },
+      body: JSON.stringify({
+        meeting_id: meetingId,
+        data: text,
+      }),
+    })
+  });
 
   let seen = new Set();  // 表示済みの result を保存
 
