@@ -690,6 +690,10 @@ video {
   height: 90vh;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .max-h-\[500px\] {
   max-height: 500px;
 }
@@ -750,6 +754,10 @@ video {
 
 .cursor-move {
   cursor: move;
+}
+
+.resize-none {
+  resize: none;
 }
 
 .list-inside {
@@ -840,6 +848,10 @@ video {
 
 .border {
   border-width: 1px;
+}
+
+.border-none {
+  border-style: none;
 }
 
 .border-gray-200 {

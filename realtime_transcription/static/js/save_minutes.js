@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const meetingId = root.dataset.meetingId;
 
   saveBtn.addEventListener("click", () => {
-    modalText.value = transcriptionBox.innerText;
+    modalText.value = transcriptionBox.value;
     modal.classList.remove("hidden");
   });
 

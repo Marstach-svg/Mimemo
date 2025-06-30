@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
   stopBtn.addEventListener("click", () => {
     recognition.stop();
 
-    const text = transcriptionBox.innerText;
+    const text = transcriptionBox.value;
     fetch("/realtime/save-minutes/", {
       method: "POST",
       headers: {
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // ダウンロード処理
   downloadBtn.addEventListener("click", () => {
-    const text = transcriptionBox.innerText;
+    const text = transcriptionBox.value;
     const blob = new Blob([text], { type: 'text/plain' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
