@@ -24,6 +24,20 @@ def meeting_view(request):
     return render(request, "meeting.html", {"form": form})
 
 @login_required
+def meeting_edit_view(request, meeting_id):
+    meeting = get_object_or_404(Meetings, id=meeting_id, user=request.user)
+
+    if request.method == "POST":
+        form = MeetingForm(request.POST, instance=meeting)
+        if form.is_valid():
+            form.save()
+            return redirect("transcript", meeting_id=meeting.id)
+    else:
+        form = MeetingForm(instance=meeting)
+
+    return render(request, "meeting.html", {"form": form, "edit": True, "meeting_id": meeting.id})
+
+@login_required
 def transcript_view(request, meeting_id):
     meeting = get_object_or_404(Meetings, id=meeting_id)
     minutes = Minutes.objects.filter(meeting=meeting).first()  # ← 存在すれば取得、なければ None

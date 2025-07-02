@@ -43,7 +43,7 @@
 
         <!-- 会議名 -->
         <div class="absolute top-4 left-6 text-lg font-semibold text-indigo-600">
-        {{ meeting.meeting_name }}
+            <a href="{% url 'meeting_edit' meeting.id %}" class="hover:underline hover:text-indigo-800 transition-colors duration-200">{{ meeting.meeting_name }}</a>
         </div>
 
         <!-- 保存ボタン（右上） -->
