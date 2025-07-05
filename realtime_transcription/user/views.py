@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from transcript.models import Meetings
 from .forms import CustomSignupForm, LoginForm
+from django.db.models import Q
 
 
 def signup_view(request):
@@ -49,5 +50,22 @@ def logout_view(request):
 
 @login_required
 def mypage_view(request):
-    meetings = Meetings.objects.filter(user=request.user).order_by('created_at')
-    return render(request, 'mypage.html', {'meetings': meetings})
+    query = request.GET.get("q", "")  # 検索キーワード
+    sort = request.GET.get("sort", "created_at")  # 並び替えの対象フィールド
+    order = request.GET.get("order", "asc")  # 昇順 or 降順
+
+    sort_field = sort if order == "asc" else f"-{sort}"
+
+    meetings = Meetings.objects.filter(user=request.user)
+
+    if query:
+        meetings = meetings.filter(Q(meeting_name__icontains=query))
+
+    meetings = meetings.order_by(sort_field)
+
+    return render(request, 'mypage.html', {
+        'meetings': meetings,
+        'query': query,
+        'sort': sort,
+        'order': order,
+    })

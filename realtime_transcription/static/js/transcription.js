@@ -19,7 +19,15 @@ window.addEventListener("DOMContentLoaded", () => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
   }
 
-  micBtn.addEventListener("click", () => recognition.start());
+  micBtn.addEventListener("click", () => {
+    // 録音開始前に末尾に改行を入れておく
+    if (!transcriptionBox.value.endsWith('\n') && transcriptionBox.value.trim() !== '') {
+      transcriptionBox.value += '\n';
+    }
+
+    recognition.start();
+  });
+
   stopBtn.addEventListener("click", () => {
     recognition.stop();
 
@@ -49,7 +57,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // resultIndex + transcript のペアで重複検出（Setで記録）
         const key = `${i}:${transcript}`;
         if (!seen.has(key)) {
-          document.getElementById("transcriptionBox").innerText += transcript + '\n';
+          transcriptionBox.value += transcript + '\n';
           seen.add(key);
         }
       }
