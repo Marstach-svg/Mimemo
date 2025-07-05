@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
 
@@ -7,6 +7,13 @@ class CustomSignupForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ["name", "email", "password1", "password2"]
+
+class CustomUserUpdateForm(UserChangeForm):
+    password = None  # パスワードは別画面で変更する想定なら無効化
+
+    class Meta:
+        model = CustomUser
+        fields = ['name', 'email']
 
 
 class LoginForm(forms.Form):

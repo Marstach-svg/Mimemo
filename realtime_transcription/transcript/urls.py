@@ -6,5 +6,4 @@ urlpatterns = [
     path("meeting/<int:meeting_id>/edit/", meeting_edit_view, name="meeting_edit"),
     path('transcript/<int:meeting_id>/', transcript_view, name="transcript"),
     path('save-minutes/', save_minutes_view, name="save_minutes"),
-
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from transcript.models import Meetings
-from .forms import CustomSignupForm, LoginForm
+from .forms import CustomSignupForm, CustomUserUpdateForm, LoginForm
 from django.db.models import Q
 
 
@@ -69,3 +69,15 @@ def mypage_view(request):
         'sort': sort,
         'order': order,
     })
+
+@login_required
+def user_edit_view(request):
+    if request.method == 'POST':
+        form = CustomUserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('mypage')  # 完了後にマイページなどにリダイレクト
+    else:
+        form = CustomUserUpdateForm(instance=request.user)
+
+    return render(request, 'user_settings.html', {'form': form})
