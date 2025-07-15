@@ -5,6 +5,9 @@ from django.http import JsonResponse
 from .models import Meetings, Minutes
 from .forms import MeetingForm
 import json
+import requests
+import os
+from django.conf import settings
 
 
 #meeting, transcript, (delete, update関係も追加で作成)
@@ -68,3 +71,65 @@ def save_minutes_view(request):
         "status": "success",
         "created": created,
     })
+
+@require_POST
+@login_required
+def create_minutes_view(request):
+    try:
+        data = json.loads(request.body)
+        meeting_id = data.get("meeting_id")
+        transcript = data.get("transcript", "")
+    except (json.JSONDecodeError, TypeError):
+        return JsonResponse({"success": False, "error": "Invalid JSON"}, status=400)
+
+    if not transcript.strip():
+        return JsonResponse({"success": False, "error": "Transcript is empty"}, status=400)
+
+    meeting = get_object_or_404(Meetings, id=meeting_id)
+    
+    # 環境変数からAPIキーを取得
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key:
+        return JsonResponse({"success": False, "error": "API key not configured"}, status=500)
+    
+    # OpenAI APIを呼び出して議事録を作成
+    try:
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "gpt-3.5-turbo",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "あなたは会議の議事録を作成するアシスタントです。提供された文字起こしテキストから、要点を整理し、読みやすい議事録を作成してください。"
+                    },
+                    {
+                        "role": "user",
+                        "content": f"以下の文字起こしテキストから議事録を作成してください：\n\n{transcript}"
+                    }
+                ],
+                "max_tokens": 2000,
+                "temperature": 0.3,
+            },
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        minutes = result['choices'][0]['message']['content']
+        
+        return JsonResponse({
+            "success": True,
+            "minutes": minutes
+        })
+        
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({"success": False, "error": f"API request failed: {str(e)}"}, status=500)
+    except KeyError as e:
+        return JsonResponse({"success": False, "error": f"Unexpected API response format: {str(e)}"}, status=500)
+    except Exception as e:
+        return JsonResponse({"success": False, "error": f"Unexpected error: {str(e)}"}, status=500)
