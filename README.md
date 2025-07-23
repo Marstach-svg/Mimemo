@@ -1,7 +1,7 @@
 # 🎤 Mimemo - リアルタイム文字起こしアプリ
 
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="Mimemo Logo" width="80%" style="border-radius: 12px;">
+  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="Mimemo Logo" width="80%">
 </div>
 
 ## 📝 概要
@@ -21,19 +21,19 @@
 
 ### 🔐 認証画面
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233430.png" alt="サインアップ画面" width="45%" style="border-radius: 8px; margin: 5px;">
-  <img src="readme_images/スクリーンショット 2025-07-23 233421.png" alt="ログイン画面" width="45%" style="border-radius: 8px; margin: 5px;">
+  <img src="readme_images/スクリーンショット 2025-07-23 233430.png" alt="サインアップ画面" width="45%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233421.png" alt="ログイン画面" width="45%">
 </div>
 
 ### 📋 会議管理
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233402.png" alt="会議作成画面" width="45%" style="border-radius: 8px; margin: 5px;">
-  <img src="readme_images/スクリーンショット 2025-07-23 233448.png" alt="マイ会議画面" width="45%" style="border-radius: 8px; margin: 5px;">
+  <img src="readme_images/スクリーンショット 2025-07-23 233402.png" alt="会議作成画面" width="45%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233448.png" alt="マイ会議画面" width="45%">
 </div>
 
 ### 🎙️ 文字起こし画面
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="録音文字起こし画面" width="80%" style="border-radius: 12px;">
+  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="録音文字起こし画面" width="80%">
 </div>
 
 ---
