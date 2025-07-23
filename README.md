@@ -21,13 +21,13 @@
 
 ### 🔐 認証画面
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233402.png" alt="ログイン画面" width="45%">
-  <img src="readme_images/スクリーンショット 2025-07-23 233421.png" alt="サインアップ画面" width="45%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233430.png" alt="サインアップ画面" width="45%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233421.png" alt="ログイン画面" width="45%">
 </div>
 
 ### 📋 会議管理
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233430.png" alt="会議作成画面" width="45%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233402.png" alt="会議作成画面" width="45%">
   <img src="readme_images/スクリーンショット 2025-07-23 233448.png" alt="マイ会議画面" width="45%">
 </div>
 
