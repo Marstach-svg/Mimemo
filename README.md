@@ -114,18 +114,6 @@ python manage.py runserver
 
 ---
 
-## 📄 ライセンス
-
-このプロジェクトはMITライセンスの下で公開されています。
-
----
-
-## 👨‍💻 開発者
-
-**Mimemo Development Team**
-
----
-
 <div align="center">
   
 ### 🌟 気に入ったらスターをお願いします！
