@@ -1,12 +1,12 @@
-# 🎤 Mimemo - リアルタイム文字起こしアプリ
+# 🎤 mimemo - リアルタイム文字起こしアプリ
 
 <div align="center">
-  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="Mimemo Logo" width="80%">
+  <img src="readme_images/スクリーンショット 2025-07-23 233350.png" alt="mimemo Logo" width="80%">
 </div>
 
 ## 📝 概要
 
-**Mimemo**は、リアルタイムで音声を文字起こしできる革新的なWebアプリケーションです。  
+**mimemo**は、リアルタイムで音声を文字起こしできる革新的なWebアプリケーションです。  
 会議や講義、インタビューなどの音声を瞬時にテキスト化し、効率的な情報管理をサポートします。
 
 ### ✨ 主な特徴
