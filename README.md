@@ -72,39 +72,7 @@
 
 ---
 
-## 🛠️ セットアップ
-
-### 前提条件
-- Python 3.8以上
-- Node.js (TailwindCSS用)
-- Git
-
-### インストール手順
-
-```bash
-# リポジトリをクローン
-git clone https://github.com/your-username/mimemo.git
-cd mimemo
-
-# 仮想環境を作成・有効化
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# 依存関係をインストール
-pip install -r requirements.txt
-
-# データベースをマイグレーション
-python manage.py migrate
-
-# 開発サーバーを起動
-python manage.py runserver
-```
-
-アプリケーションは `http://localhost:8000` でアクセスできます。
-
----
-
-## 🚀 使用方法
+## 使用方法
 
 1. **アカウント作成** - サインアップページで新規アカウントを作成
 2. **ログイン** - 作成したアカウントでログイン
@@ -117,8 +85,5 @@ python manage.py runserver
 <div align="center">
   
 ### 🌟 気に入ったらスターをお願いします！
-  
-[![GitHub stars](https://img.shields.io/github/stars/your-username/mimemo.svg?style=social&label=Star)](https://github.com/your-username/mimemo)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/mimemo.svg?style=social&label=Fork)](https://github.com/your-username/mimemo/fork)
 
 </div>
